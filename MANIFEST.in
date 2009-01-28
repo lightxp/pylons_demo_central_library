@@ -1,0 +1,3 @@
+include central_library/config/deployment.ini_tmpl
+recursive-include central_library/public *
+recursive-include central_library/templates *
