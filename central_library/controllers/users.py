@@ -24,12 +24,16 @@ class UsersController(BaseController):
     def create(self):
         """POST /users: Create a new item."""
         # url('users')
-        pass
+        is_staff = ('is_staff' in request.params)
+        user = model.User(request.params['name'], request.params['address'], is_staff)
+        model.meta.Session.add(user)
+        model.meta.Session.commit()
+        return redirect_to("user", id=user.user_id)
 
     def new(self, format='html'):
         """GET /users/new: Form to create a new item."""
         # url('new_user')
-        pass
+        return render("users/new.mako")
 
     def update(self, id):
         """PUT /users/id: Update an existing item."""
