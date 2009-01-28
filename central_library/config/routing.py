@@ -20,6 +20,7 @@ def make_map():
 
     # CUSTOM ROUTES HERE
 
+    map.connect('books', '/books', controller="book", action="index")
     map.resource('user', 'users')
 
     return map
