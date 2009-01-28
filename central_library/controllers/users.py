@@ -4,7 +4,7 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to
 
 from central_library.lib.base import BaseController, render
-#from central_library import model
+from central_library import model
 
 log = logging.getLogger(__name__)
 
@@ -18,7 +18,8 @@ class UsersController(BaseController):
     def index(self, format='html'):
         """GET /users: All items in the collection."""
         # url('users')
-        pass
+        c.users = model.User.query()
+        return render("users/index.mako")
 
     def create(self):
         """POST /users: Create a new item."""

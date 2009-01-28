@@ -5,3 +5,5 @@ available to Controllers. This module is available to both as 'h'.
 """
 # Import helpers as desired, or define your own, ie:
 # from webhelpers.html.tags import checkbox, password
+from webhelpers.html.tags import form, ModelTags, link_to, submit, select
+from webhelpers.html.tools import button_to
