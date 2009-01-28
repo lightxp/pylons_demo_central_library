@@ -43,7 +43,16 @@ class UsersController(BaseController):
         #    h.form(url('user', id=ID),
         #           method='put')
         # url('user', id=ID)
-        pass
+        user = model.User.query().get(id)
+        if user is None:
+            abort(404)
+        
+        user.name = request.params["name"]
+        user.address = request.params["address"]
+        user.is_staff = ('is_staff' in request.params)
+
+        model.meta.Session.commit()
+        return redirect_to("user", id=user.user_id)
 
     def delete(self, id):
         """DELETE /users/id: Delete an existing item."""
@@ -53,14 +62,25 @@ class UsersController(BaseController):
         #    h.form(url('user', id=ID),
         #           method='delete')
         # url('user', id=ID)
-        pass
+        user = model.User.query().get(id)
+        if user is None:
+            abort(404)
+        model.meta.Session.delete(user)
+        model.meta.Session.commit()
+        return redirect_to("users")
 
     def show(self, id, format='html'):
         """GET /users/id: Show a specific item."""
         # url('user', id=ID)
-        pass
+        c.user = model.User.query().get(id)
+        if c.user is None:
+            abort(404)
+        return render('users/show.mako')
 
     def edit(self, id, format='html'):
         """GET /users/id/edit: Form to edit an existing item."""
         # url('edit_user', id=ID)
-        pass
+        c.user = model.User.query().get(id)
+        if c.user is None:
+            abort(404)
+        return render('users/edit.mako')
