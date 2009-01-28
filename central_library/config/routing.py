@@ -22,6 +22,8 @@ def make_map():
 
     map.connect('books', '/books', controller="book", action="index")
     map.connect('book', '/book/{id}', controller="book", action="show")
+    map.connect('checkout_copy', '/copy/{id}/checkout', controller="book", action="checkout")
+    map.connect('checkin_copy', '/copy/{id}/checkin', controller="book", action="checkin")
     map.resource('user', 'users')
 
     return map

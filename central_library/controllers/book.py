@@ -1,4 +1,4 @@
-import logging
+import logging, datetime
 
 from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to
@@ -22,3 +22,24 @@ class BookController(BaseController):
             abort(404)
         c.users = [(user.user_id, user.name) for user in model.User.query()]
         return render("books/show.mako")
+    def checkout(self, id):
+        copy = model.Copy.query().get(id)
+        if copy is None:
+            abort(404)
+        if copy.is_out():
+            abort(400)
+        user = model.User.query().get(request.params["user_id"])
+        loan = model.Loan(user, copy, datetime.date.today()+datetime.timedelta(weeks=3))
+        model.meta.Session.add(loan)
+        model.meta.Session.commit()
+        return redirect_to("book", id=copy.item.item_id)
+    def checkin(self, id):
+        copy = model.Copy.query().get(id)
+        if copy is None:
+            abort(404)
+        if not copy.is_out():
+            abort(400)
+        loan = copy.current_loan()
+        loan.returned = True
+        model.meta.Session.commit()
+        return redirect_to("book", id=copy.item.item_id)
