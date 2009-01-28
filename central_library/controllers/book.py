@@ -16,3 +16,9 @@ class BookController(BaseController):
         # or, Return a response
         c.items = model.Item.query()
         return render("books/index.mako")
+    def show(self, id):
+        c.item = model.Item.query().get(id)
+        if c.item is None:
+            abort(404)
+        c.users = [(user.user_id, user.name) for user in model.User.query()]
+        return render("books/show.mako")
