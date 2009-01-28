@@ -15,7 +15,7 @@ Item: "${c.item.title}"
 <table border="0" cellspacing="5" cellpadding="5">
     <tr><th>Copy ID</th><th>Acquired On</th><th>Condition</th><th>Checked Out?</th><th>Checked Out To</th><th>Due Date</th><th>Actions</th></tr>
 % for copy in c.item.copies:
-    <tr><td>${copy.copy_id}</td><td>${copy.acquired_date}</td><td>${copy.condition_notes}</td><td>${copy.is_out()}</td><td>${copy.current_loan().user.name if copy.is_out() else u""}</td><td>${copy.current_loan().due_date if copy.is_out() else u""}</td><td>
+    <tr><td>${copy.copy_id}</td><td>${copy.acquired_date}</td><td>${copy.condition_notes}</td><td>${copy.is_out()}</td><td>${copy.current_loan().user.name if copy.is_out() else u""}</td><td>${copy.current_loan().due_date if copy.is_out() else u""}</td><td>${h.link_to("Details", url("copy", id=copy.copy_id))} —
 % if copy.is_out():
 ${h.form(url('checkin_copy', id=copy.copy_id))}
 ${h.submit("checkin", "Checkin")}

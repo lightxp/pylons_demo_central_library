@@ -22,6 +22,12 @@ class BookController(BaseController):
             abort(404)
         c.users = [(user.user_id, user.name) for user in model.User.query()]
         return render("books/show.mako")
+    def show_copy(self, id):
+        c.copy = model.Copy.query().get(id)
+        if c.copy is None:
+            abort(404)
+        c.users = [(user.user_id, user.name) for user in model.User.query()]
+        return render("books/show_copy.mako")
     def checkout(self, id):
         copy = model.Copy.query().get(id)
         if copy is None:
