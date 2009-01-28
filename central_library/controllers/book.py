@@ -4,7 +4,7 @@ from pylons import request, response, session, tmpl_context as c
 from pylons.controllers.util import abort, redirect_to
 
 from central_library.lib.base import BaseController, render
-#from central_library import model
+from central_library import model
 
 log = logging.getLogger(__name__)
 
